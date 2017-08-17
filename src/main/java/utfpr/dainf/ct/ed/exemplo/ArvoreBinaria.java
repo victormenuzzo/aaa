@@ -99,12 +99,11 @@ public class ArvoreBinaria<E> {
      * Retorna a raiz da árvore e atribui o nó visitado à raiz.
      * @return A raiz
      */
-    public ArvoreBinaria<E> primeiro() {
+    public void reinicia() {
         inicializaPilha();
         pilha.clear();
         ultimoVisitado = this;
-        inicio = false;
-        return ultimoVisitado;
+        inicio = true;
     }
     
     /**
@@ -114,9 +113,8 @@ public class ArvoreBinaria<E> {
     public ArvoreBinaria<E> proximoEmOrdem() {
         ArvoreBinaria<E> resultado = null;
         if (inicio) {
-            inicializaPilha();
+            reinicia();
             inicio = false;
-            ultimoVisitado = this;
         }
         if (!pilha.isEmpty() || ultimoVisitado != null) {
             while (ultimoVisitado != null) {
@@ -127,7 +125,6 @@ public class ArvoreBinaria<E> {
             resultado = ultimoVisitado;
             ultimoVisitado = ultimoVisitado.direita;
         }
-        inicio = resultado == null;
         return resultado;
     }
     

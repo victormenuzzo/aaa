@@ -40,5 +40,6 @@ public class Main {
         while ((no = a.proximoEmOrdem()) != null) {
             System.out.print(" " + no.getDado());
         }
+        
     }
 }
