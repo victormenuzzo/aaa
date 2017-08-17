@@ -96,10 +96,10 @@ public class ArvoreBinaria<E> {
     }
     
     /**
-     * Retorna o dado na raiz da árvore e atribui o nó visitado à raiz.
-     * @return O dado da raiz.
+     * Retorna a raiz da árvore e atribui o nó visitado à raiz.
+     * @return A raiz
      */
-    public ArvoreBinaria<E> primeiroEmOrdem() {
+    public ArvoreBinaria<E> primeiro() {
         inicializaPilha();
         pilha.clear();
         ultimoVisitado = this;
