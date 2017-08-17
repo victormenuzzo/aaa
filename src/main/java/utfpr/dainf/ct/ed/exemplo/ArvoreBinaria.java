@@ -82,6 +82,13 @@ public class ArvoreBinaria<E> {
         }
     }
     
+    /**
+     * Visita os nós da árvore em-ordem a partir da raiz.
+     */
+    public void visitaEmOrdem() {
+        visitaEmOrdem(this);
+    }
+    
     private void inicializaPilha() {
         if (pilha == null) {
             pilha = new Stack<>();
@@ -122,13 +129,6 @@ public class ArvoreBinaria<E> {
         }
         inicio = resultado == null;
         return resultado;
-    }
-    
-    /**
-     * Visita os nós da árvore em-ordem a partir da raiz.
-     */
-    public void visitaEmOrdem() {
-        ArvoreBinaria.this.visitaEmOrdem(this);
     }
     
     /**
