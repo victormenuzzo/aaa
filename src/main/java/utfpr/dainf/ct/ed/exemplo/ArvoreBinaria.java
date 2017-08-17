@@ -96,8 +96,9 @@ public class ArvoreBinaria<E> {
     }
     
     /**
-     * Retorna a raiz da árvore e atribui o nó visitado à raiz.
-     * @return A raiz
+     * Reinicia o percurso a partir do início.
+     * Deve ser chamado após percorrer toda a árvore para realizar novo
+     * percurso ou para voltar ao início a qualquer momento.
      */
     public void reinicia() {
         inicializaPilha();
