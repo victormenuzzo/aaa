@@ -1,5 +1,7 @@
 package utfpr.dainf.ct.ed.exemplo;
 
+import java.util.Stack;
+
 /**
  * UTFPR - Universidade Tecnológica Federal do Paraná
  * DAINF - Departamento Acadêmico de Informática
@@ -13,6 +15,11 @@ public class ArvoreBinaria<E> {
     private E dado;
     private ArvoreBinaria<E> esquerda;
     private ArvoreBinaria<E> direita;
+    
+    // para percurso iterativo
+    private boolean inicio = true;
+    private Stack<ArvoreBinaria<E>> pilha;
+    private ArvoreBinaria<E> ultimoVisitado;
 
     /**
      * Cria uma árvore binária com dado nulo na raiz.
@@ -73,6 +80,48 @@ public class ArvoreBinaria<E> {
             visita(raiz);
             ArvoreBinaria.this.visitaEmOrdem(raiz.direita);
         }
+    }
+    
+    private void inicializaPilha() {
+        if (pilha == null) {
+            pilha = new Stack<>();
+        }
+    }
+    
+    /**
+     * Retorna o dado na raiz da árvore e atribui o nó visitado à raiz.
+     * @return O dado da raiz.
+     */
+    public ArvoreBinaria<E> primeiroEmOrdem() {
+        inicializaPilha();
+        pilha.clear();
+        ultimoVisitado = this;
+        inicio = false;
+        return ultimoVisitado;
+    }
+    
+    /**
+     * Retorna o dado do próximo nó em-ordem.
+     * @return O dado do próximo nó em-ordem.
+     */
+    public ArvoreBinaria<E> proximoEmOrdem() {
+        ArvoreBinaria<E> resultado = null;
+        if (inicio) {
+            inicializaPilha();
+            inicio = false;
+            ultimoVisitado = this;
+        }
+        if (!pilha.isEmpty() || ultimoVisitado != null) {
+            while (ultimoVisitado != null) {
+                pilha.push(ultimoVisitado);
+                ultimoVisitado = ultimoVisitado.esquerda;
+            }
+            ultimoVisitado = pilha.pop();
+            resultado = ultimoVisitado;
+            ultimoVisitado = ultimoVisitado.direita;
+        }
+        inicio = resultado == null;
+        return resultado;
     }
     
     /**

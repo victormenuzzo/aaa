@@ -33,6 +33,12 @@ public class Main {
         // monta o ramo direito
         a.insereDireita(10).insereDireita(14).insereEsquerda(13);
         
+        System.out.println("PERCURSO RECURSIVO");
         a.visitaEmOrdem();
+        System.out.println("\nPERCURSO ITERATIVO");
+        ArvoreBinaria<Integer> no;
+        while ((no = a.proximoEmOrdem()) != null) {
+            System.out.print(" " + no.getDado());
+        }
     }
 }
