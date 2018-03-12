@@ -2,7 +2,6 @@ package utfpr.dainf.ct.ed.exemplo;
 
 import java.util.ArrayDeque;
 import java.util.Stack;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * UTFPR - Universidade Tecnológica Federal do Paraná
