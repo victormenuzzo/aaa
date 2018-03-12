@@ -181,21 +181,25 @@ public class ArvoreBinaria<E> {
     }
     
     /**
-     * Retorna o valor do próximo nó em pré-ordem.
-     * @return O valor do próximo nó em pré-ordem.
+     * Retorna o próximo nó em pré-ordem.
+     * @return O próximo nó em pré-ordem.
      */
     public ArvoreBinaria<E> proximoPreOrdem() {
         throw new RuntimeException("Não implementado");
     }
     
     /**
-     * Retorna o valor do próximo nó em pós-ordem.
-     * @return O valor do próximo nó em pós-ordem.
+     * Retorna o próximo nó em pós-ordem.
+     * @return O próximo nó em pós-ordem.
      */
     public ArvoreBinaria<E> proximoPosOrdem() {
         throw new RuntimeException("Não implementado");
     }
     
+    /**
+     * Retorna o próximo nó em nível.
+     * @return O próximo nó em nível.
+     */
     public ArvoreBinaria<E> proximoEmNivel() {
         throw new RuntimeException("Não implementado");
     }
