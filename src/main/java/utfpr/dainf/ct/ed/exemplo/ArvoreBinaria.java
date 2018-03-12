@@ -1,6 +1,8 @@
 package utfpr.dainf.ct.ed.exemplo;
 
+import java.util.ArrayDeque;
 import java.util.Stack;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * UTFPR - Universidade Tecnológica Federal do Paraná
@@ -12,62 +14,74 @@ import java.util.Stack;
  */
 public class ArvoreBinaria<E> {
     
-    private E dado;
-    private ArvoreBinaria<E> esquerda;
-    private ArvoreBinaria<E> direita;
+    protected E valor;
+    protected ArvoreBinaria<E> esquerda;
+    protected ArvoreBinaria<E> direita;
     
     // para percurso iterativo
     private boolean inicio = true;
     private Stack<ArvoreBinaria<E>> pilha;
+    private ArrayDeque<ArvoreBinaria<E>> fila;
     private ArvoreBinaria<E> ultimoVisitado;
+    private ArvoreBinaria<E> noPos;
 
     /**
-     * Cria uma árvore binária com dado nulo na raiz.
+     * Cria uma árvore binária com valor nulo na raiz.
      */
     public ArvoreBinaria() {
     }
 
     /**
-     * Cria uma árvore binária com dado {@code dado} na raiz.
-     * @param valor O dado do nó raiz
+     * Cria uma árvore binária com valor {@code valor} na raiz.
+     * @param valor O valor do nó raiz
      */
-    public ArvoreBinaria(E dado) {
-        this.dado = dado;
+    public ArvoreBinaria(E valor) {
+        this.valor = valor;
     }
     
     /**
-     * Adiciona um nó à esquerda do nó corrente.
-     * @param dado O dado associado ao nó inserido.
-     * @return A árvore adicionada ao nó
+     * Insere uma subárvore à esquerda deste nó.
+     * A subárvore à esquerda deste nó é inserida na folha mais à esquerda
+     * da subárvore inserida.
+     * @param a A subárvore a ser inserida.
+     * @return A subárvore inserida.
      */
-    public ArvoreBinaria<E> insereEsquerda(E dado) {
+    public ArvoreBinaria<E> insereEsquerda(ArvoreBinaria<E> a) {
         ArvoreBinaria<E> e = esquerda;
-        esquerda = new ArvoreBinaria<>(dado);
-        esquerda.esquerda = e;
-        return esquerda;
+        ArvoreBinaria<E> x = a;
+        esquerda = a;
+        while (x.esquerda != null)
+            x = x.esquerda;
+        x.esquerda = e;
+        return a;
     }
     
     /**
-     * Adiciona um nó à esquerda do nó corrente.
-     * @param dado O dado associado ao nó inserido.
-     * @return A árvore adicionada ao nó
+     * Insere uma subárvore à direita deste nó.
+     * A subárvore à direita deste nó é inserida na folha mais à direita
+     * da subárvore inserida.
+     * @param a A subárvore a ser inserida.
+     * @return A subárvore inserida.
      */
-    public ArvoreBinaria<E> insereDireita(E dado) {
+    public ArvoreBinaria<E> insereDireita(ArvoreBinaria<E> a) {
         ArvoreBinaria<E> d = direita;
-        direita = new ArvoreBinaria<>(dado);
-        direita.direita = d;
-        return direita;
+        ArvoreBinaria<E> x = a;
+        direita = a;
+        while (x.direita != null)
+            x = x.direita;
+        x.direita = d;
+        return a;
     }
     
     /**
-     * Implementação padrão que exibe o dado armazenado no nó usando
-     * o método {@code toString() }.
+     * Implementação padrão que exibe o valor armazenado no nó usando
+     * o método {@code toString()}.
      * Pode ser sobrecarregado em classes derivadas para implementar outras
      * formas de visita.
      * @param no O nó a ser visitado
      */
     protected void visita(ArvoreBinaria<E> no) {
-        System.out.print(" " + no.dado);
+        System.out.print(" " + no.valor);
     }
     
     /**
@@ -76,9 +90,9 @@ public class ArvoreBinaria<E> {
      */
     public void visitaEmOrdem(ArvoreBinaria<E> raiz) {
         if (raiz != null) {
-            ArvoreBinaria.this.visitaEmOrdem(raiz.esquerda);
+            visitaEmOrdem(raiz.esquerda);
             visita(raiz);
-            ArvoreBinaria.this.visitaEmOrdem(raiz.direita);
+            visitaEmOrdem(raiz.direita);
         }
     }
     
@@ -89,9 +103,45 @@ public class ArvoreBinaria<E> {
         visitaEmOrdem(this);
     }
     
+    /**
+     * Visita os nós da subárvore em pre-ordem.
+     * @param raiz A raiz da subárvore
+     */
+    public void visitaPreOrdem(ArvoreBinaria<E> raiz) {
+        throw new RuntimeException("Não implementado");
+    }
+    
+    /**
+     * Visita os nós da árvore em pre-ordem a partir da raiz.
+     */
+    public void visitaPreOrdem() {
+        visitaPreOrdem(this);
+    }
+    
+    /**
+     * Visita os nós da subárvore em pre-ordem.
+     * @param raiz A raiz da subárvore
+     */
+    public void visitaPosOrdem(ArvoreBinaria<E> raiz) {
+        throw new RuntimeException("Não implementado");
+    }
+    
+    /**
+     * Visita os nós da árvore em pre-ordem a partir da raiz.
+     */
+    public void visitaPosOrdem() {
+        visitaPosOrdem(this);
+    }
+    
     private void inicializaPilha() {
         if (pilha == null) {
             pilha = new Stack<>();
+        }
+    }
+    
+    private void inicializaFila() {
+        if (fila == null) {
+            fila = new ArrayDeque<>();
         }
     }
     
@@ -102,14 +152,16 @@ public class ArvoreBinaria<E> {
      */
     public void reinicia() {
         inicializaPilha();
+        inicializaFila();
         pilha.clear();
+        fila.clear();
         ultimoVisitado = this;
         inicio = true;
     }
     
     /**
-     * Retorna o dado do próximo nó em-ordem.
-     * @return O dado do próximo nó em-ordem.
+     * Retorna o valor do próximo nó em-ordem.
+     * @return O valor do próximo nó em-ordem.
      */
     public ArvoreBinaria<E> proximoEmOrdem() {
         ArvoreBinaria<E> resultado = null;
@@ -130,19 +182,39 @@ public class ArvoreBinaria<E> {
     }
     
     /**
-     * Retorna o dado armazenado no nó.
-     * @return O dado armazenado no nó.
+     * Retorna o valor do próximo nó em pré-ordem.
+     * @return O valor do próximo nó em pré-ordem.
      */
-    public E getDado() {
-        return dado;
+    public ArvoreBinaria<E> proximoPreOrdem() {
+        throw new RuntimeException("Não implementado");
+    }
+    
+    /**
+     * Retorna o valor do próximo nó em pós-ordem.
+     * @return O valor do próximo nó em pós-ordem.
+     */
+    public ArvoreBinaria<E> proximoPosOrdem() {
+        throw new RuntimeException("Não implementado");
+    }
+    
+    public ArvoreBinaria<E> proximoEmNivel() {
+        throw new RuntimeException("Não implementado");
+    }
+    
+    /**
+     * Retorna o valor armazenado no nó.
+     * @return O valor armazenado no nó.
+     */
+    public E getValor() {
+        return valor;
     }
 
     /**
-     * Atribui um dado ao nó.
-     * @param dado O dado a ser atribuído ao nó.
+     * Atribui um valor ao nó.
+     * @param valor O valor a ser atribuído ao nó.
      */
-    public void setDado(E dado) {
-        this.dado = dado;
+    public void setValor(E valor) {
+        this.valor = valor;
     }
 
     /**
@@ -159,6 +231,22 @@ public class ArvoreBinaria<E> {
      */
     protected ArvoreBinaria<E> getDireita() {
         return direita;
+    }
+
+    /**
+     * Inicializa a árvore esquerda.
+     * @param esquerda A árvore esquerda.
+     */
+    protected void setEsquerda(ArvoreBinaria<E> esquerda) {
+        this.esquerda = esquerda;
+    }
+
+    /**
+     * Inicializa a árvore direita.
+     * @param direita A árvore direita.
+     */
+    protected void setDireita(ArvoreBinaria<E> direita) {
+        this.direita = direita;
     }
     
 }

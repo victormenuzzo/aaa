@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     
     <groupId>utfpr.dainf.ct.ed.exemplos</groupId>
-    <artifactId>arvore-binaria-v1</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <artifactId>arvore-binaria</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     
-    <name>Estruturas de Dados :: Exemplo :: Árvore Binária :: V1 </name>
+    <name>Estruturas de Dados :: Exemplo :: Árvore Binária</name>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -34,5 +34,5 @@
         
         <finalName>${project.artifactId}</finalName>
     </build>
-    <description>Primeira versão da implementação de árvore binária.</description>
+    <description>Implementação de árvore binária.</description>
 </project>
