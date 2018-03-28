@@ -4,19 +4,20 @@ import java.util.ArrayDeque;
 import java.util.Stack;
 
 /**
- * UTFPR - Universidade Tecnológica Federal do Paraná
- * DAINF - Departamento Acadêmico de Informática
- * 
+ * UTFPR - Universidade Tecnológica Federal do Paraná DAINF - Departamento
+ * Acadêmico de Informática
+ *
  * Exemplo de implementação de árvore binária.
+ *
  * @author Wilson Horstmeyer Bogado <wilson@utfpr.edu.br>
  * @param <E> O tipo do valor armazenado nos nós na árvore
  */
 public class ArvoreBinaria<E> {
-    
+
     protected E valor;
     protected ArvoreBinaria<E> esquerda;
     protected ArvoreBinaria<E> direita;
-    
+
     // para percurso iterativo
     private boolean inicio = true;
     private Stack<ArvoreBinaria<E>> pilha;
@@ -32,16 +33,17 @@ public class ArvoreBinaria<E> {
 
     /**
      * Cria uma árvore binária com valor {@code valor} na raiz.
+     *
      * @param valor O valor do nó raiz
      */
     public ArvoreBinaria(E valor) {
         this.valor = valor;
     }
-    
+
     /**
-     * Insere uma subárvore à esquerda deste nó.
-     * A subárvore à esquerda deste nó é inserida na folha mais à esquerda
-     * da subárvore inserida.
+     * Insere uma subárvore à esquerda deste nó. A subárvore à esquerda deste nó
+     * é inserida na folha mais à esquerda da subárvore inserida.
+     *
      * @param a A subárvore a ser inserida.
      * @return A subárvore inserida.
      */
@@ -49,16 +51,17 @@ public class ArvoreBinaria<E> {
         ArvoreBinaria<E> e = esquerda;
         ArvoreBinaria<E> x = a;
         esquerda = a;
-        while (x.esquerda != null)
+        while (x.esquerda != null) {
             x = x.esquerda;
+        }
         x.esquerda = e;
         return a;
     }
-    
+
     /**
-     * Insere uma subárvore à direita deste nó.
-     * A subárvore à direita deste nó é inserida na folha mais à direita
-     * da subárvore inserida.
+     * Insere uma subárvore à direita deste nó. A subárvore à direita deste nó é
+     * inserida na folha mais à direita da subárvore inserida.
+     *
      * @param a A subárvore a ser inserida.
      * @return A subárvore inserida.
      */
@@ -66,25 +69,27 @@ public class ArvoreBinaria<E> {
         ArvoreBinaria<E> d = direita;
         ArvoreBinaria<E> x = a;
         direita = a;
-        while (x.direita != null)
+        while (x.direita != null) {
             x = x.direita;
+        }
         x.direita = d;
         return a;
     }
-    
+
     /**
-     * Implementação padrão que exibe o valor armazenado no nó usando
-     * o método {@code toString()}.
-     * Pode ser sobrecarregado em classes derivadas para implementar outras
-     * formas de visita.
+     * Implementação padrão que exibe o valor armazenado no nó usando o método
+     * {@code toString()}. Pode ser sobrecarregado em classes derivadas para
+     * implementar outras formas de visita.
+     *
      * @param no O nó a ser visitado
      */
     protected void visita(ArvoreBinaria<E> no) {
         System.out.print(" " + no.valor);
     }
-    
+
     /**
      * Visita os nós da subárvore em-ordem.
+     *
      * @param raiz A raiz da subárvore
      */
     public void visitaEmOrdem(ArvoreBinaria<E> raiz) {
@@ -94,60 +99,70 @@ public class ArvoreBinaria<E> {
             visitaEmOrdem(raiz.direita);
         }
     }
-    
+
     /**
      * Visita os nós da árvore em-ordem a partir da raiz.
      */
     public void visitaEmOrdem() {
         visitaEmOrdem(this);
     }
-    
+
     /**
      * Visita os nós da subárvore em pre-ordem.
+     *
      * @param raiz A raiz da subárvore
      */
     public void visitaPreOrdem(ArvoreBinaria<E> raiz) {
-        throw new RuntimeException("Não implementado");
+        if (raiz != null) {
+            visita(raiz);
+            visitaPreOrdem(raiz.esquerda);
+            visitaPreOrdem(raiz.direita);
+        }
     }
-    
+
     /**
      * Visita os nós da árvore em pre-ordem a partir da raiz.
      */
     public void visitaPreOrdem() {
         visitaPreOrdem(this);
     }
-    
+
     /**
      * Visita os nós da subárvore em pre-ordem.
+     *
      * @param raiz A raiz da subárvore
      */
     public void visitaPosOrdem(ArvoreBinaria<E> raiz) {
-        throw new RuntimeException("Não implementado");
+        if (raiz != null) {
+            visitaPosOrdem(raiz.esquerda);
+            visitaPosOrdem(raiz.direita);
+            visita(raiz);
+        }
     }
-    
+
     /**
      * Visita os nós da árvore em pre-ordem a partir da raiz.
      */
     public void visitaPosOrdem() {
         visitaPosOrdem(this);
     }
-    
+
     private void inicializaPilha() {
         if (pilha == null) {
             pilha = new Stack<>();
         }
     }
-    
+
     private void inicializaFila() {
         if (fila == null) {
             fila = new ArrayDeque<>();
         }
     }
-    
+
     /**
-     * Reinicia o percurso a partir do início.
-     * Deve ser chamado após percorrer toda a árvore para realizar novo
-     * percurso ou para voltar ao início a qualquer momento.
+     * Reinicia o percurso a partir do início. Deve ser chamado após percorrer
+     * toda a árvore para realizar novo percurso ou para voltar ao início a
+     * qualquer momento.
      */
     public void reinicia() {
         inicializaPilha();
@@ -157,9 +172,10 @@ public class ArvoreBinaria<E> {
         ultimoVisitado = this;
         inicio = true;
     }
-    
+
     /**
      * Retorna o valor do próximo nó em-ordem.
+     *
      * @return O valor do próximo nó em-ordem.
      */
     public ArvoreBinaria<E> proximoEmOrdem() {
@@ -179,33 +195,99 @@ public class ArvoreBinaria<E> {
         }
         return resultado;
     }
-    
+
     /**
      * Retorna o próximo nó em pré-ordem.
+     *
      * @return O próximo nó em pré-ordem.
      */
     public ArvoreBinaria<E> proximoPreOrdem() {
-        throw new RuntimeException("Não implementado");
+        ArvoreBinaria<E> resultado = null;
+        if (inicio) {
+            reinicia();
+            inicio = false;
+            pilha.push(ultimoVisitado);
+        }
+        if (!pilha.isEmpty() || ultimoVisitado != null) {
+            ultimoVisitado = pilha.pop();
+            resultado = ultimoVisitado;
+            if (ultimoVisitado.direita != null) {
+                pilha.push(ultimoVisitado.direita);
+            }
+            if (ultimoVisitado.esquerda != null) {
+                pilha.push(ultimoVisitado.esquerda);
+            }
+        }
+        ultimoVisitado = null;
+        return resultado;
     }
-    
+
     /**
      * Retorna o próximo nó em pós-ordem.
+     *
      * @return O próximo nó em pós-ordem.
      */
     public ArvoreBinaria<E> proximoPosOrdem() {
-        throw new RuntimeException("Não implementado");
+        ArvoreBinaria<E> resultado = null;
+        ArvoreBinaria<E> ultimoNoVisitado = null;
+        ArvoreBinaria<E> noVisto = null;
+        if (inicio) {
+            reinicia();
+            inicio = false;
+        }
+        while (!pilha.isEmpty() || ultimoVisitado != null) {
+            if (ultimoVisitado != null) {
+                pilha.push(ultimoVisitado);
+                ultimoVisitado = ultimoVisitado.esquerda;
+            } else {
+                noVisto = pilha.peek();
+                if (noVisto.direita != null && ultimoNoVisitado != noVisto.direita) {
+                    ultimoVisitado = noVisto.direita;
+                } else {
+                    fila.add(noVisto);
+                    ultimoNoVisitado = pilha.pop();
+                }
+            }
+        }
+        if (!fila.isEmpty()) {
+            resultado = fila.remove();
+        } else {
+            resultado = null;
+        }
+        return resultado;
     }
-    
+
     /**
      * Retorna o próximo nó em nível.
+     *
      * @return O próximo nó em nível.
      */
     public ArvoreBinaria<E> proximoEmNivel() {
-        throw new RuntimeException("Não implementado");
+        ArvoreBinaria<E> resultado = null;
+        if (inicio) {
+            reinicia();
+            inicio = false;
+            fila.add(ultimoVisitado);
+
+        }
+        if (!fila.isEmpty()) {
+            resultado = fila.remove();
+
+            if (resultado.esquerda != null) {
+                fila.add(resultado.esquerda);
+            }
+            if (resultado.direita != null) {
+                fila.add(resultado.direita);
+            }
+            ultimoVisitado = fila.peek();
+        }
+
+        return resultado;
     }
-    
+
     /**
      * Retorna o valor armazenado no nó.
+     *
      * @return O valor armazenado no nó.
      */
     public E getValor() {
@@ -214,6 +296,7 @@ public class ArvoreBinaria<E> {
 
     /**
      * Atribui um valor ao nó.
+     *
      * @param valor O valor a ser atribuído ao nó.
      */
     public void setValor(E valor) {
@@ -222,6 +305,7 @@ public class ArvoreBinaria<E> {
 
     /**
      * Retorna a árvore esqueda.
+     *
      * @return A árvore esquerda.
      */
     protected ArvoreBinaria<E> getEsquerda() {
@@ -230,6 +314,7 @@ public class ArvoreBinaria<E> {
 
     /**
      * Retorna a árvore direita.
+     *
      * @return A árvore direita.
      */
     protected ArvoreBinaria<E> getDireita() {
@@ -238,6 +323,7 @@ public class ArvoreBinaria<E> {
 
     /**
      * Inicializa a árvore esquerda.
+     *
      * @param esquerda A árvore esquerda.
      */
     protected void setEsquerda(ArvoreBinaria<E> esquerda) {
@@ -246,10 +332,11 @@ public class ArvoreBinaria<E> {
 
     /**
      * Inicializa a árvore direita.
+     *
      * @param direita A árvore direita.
      */
     protected void setDireita(ArvoreBinaria<E> direita) {
         this.direita = direita;
     }
-    
+
 }
